@@ -42,7 +42,6 @@ public class PracticeReadCSVActivity extends AppCompatActivity {
                         String[] row = readLine.split(",");
                         Quiz quiz = new Quiz();
                         quiz.question = row[0];
-                        Log.e("Question", quiz.question);
                         quiz.multipleChoice1 = row[1];
                         quiz.multipleChoice2 = row[2];
                         quiz.multipleChoice3 = row[3];

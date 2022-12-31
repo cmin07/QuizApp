@@ -15,7 +15,7 @@
         android:theme="@style/Theme.QuizApp"
         tools:targetApi="31">
         <activity
-            android:name=".PracticeReadCSVActivity"
+            android:name=".Home"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +24,9 @@
             </intent-filter>
 
 
+        </activity>
+        <activity
+            android:name=".QuizScreen">
         </activity>
         <activity
             android:name=".PracticeNextActivity">

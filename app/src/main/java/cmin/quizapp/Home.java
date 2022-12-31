@@ -60,6 +60,10 @@ public class Home extends AppCompatActivity {
 
                                 Toast toast = Toast.makeText(context, "Welcome "+username.getText().toString(), duration);
                                 toast.show();
+
+                                Intent myIntent = new Intent(Home.this,QuizScreen.class);
+                                startActivity(myIntent);
+
                             }
 
                         });
