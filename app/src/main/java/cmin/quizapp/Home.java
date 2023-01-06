@@ -70,7 +70,5 @@ public class Home extends AppCompatActivity {
                 builder.create().show();
             }
         });
-
-
     }
 }

@@ -19,55 +19,108 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuizScreen extends AppCompatActivity {
+
+    QuizGenerator quizGenerator = new QuizGenerator();
+    Quiz quiz;
+
+    TextView streakdisplay;
+    TextView scoredisplay;
+    TextView quizquestion;
+    Button multiplechoice1;
+    Button multiplechoice2;
+    Button multiplechoice3;
+    Button multiplechoice4;
+    TextView quizexplanation;
+    Button quiznext;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quiz_screen);
 
-        TextView streakdisplay = findViewById(R.id.streakdisplay);
-        TextView scoredisplay = findViewById(R.id.scoredisplay);
-        TextView quizquestion = findViewById(R.id.quizquestion);
-        Button multiplechoice1 = findViewById(R.id.multiplechoice1);
-        Button multiplechoice2 = findViewById(R.id.multiplechoice2);
-        Button multiplechoice3 = findViewById(R.id.multiplechoice3);
-        Button multiplechoice4 = findViewById(R.id.multiplechoice4);
-        TextView quizexplanation = findViewById(R.id.quizexplanation);
-        Button quiznext = findViewById(R.id.quizscreennext);
+        streakdisplay = findViewById(R.id.streakdisplay);
+        scoredisplay = findViewById(R.id.scoredisplay);
+        quizquestion = findViewById(R.id.quizquestion);
+        multiplechoice1 = findViewById(R.id.multiplechoice1);
+        multiplechoice2 = findViewById(R.id.multiplechoice2);
+        multiplechoice3 = findViewById(R.id.multiplechoice3);
+        multiplechoice4 = findViewById(R.id.multiplechoice4);
+        quizexplanation = findViewById(R.id.quizexplanation);
+        quiznext = findViewById(R.id.quizscreennext);
 
-        try {
-            InputStreamReader inputStreamReader = new InputStreamReader(getAssets().open("questionbank.csv"));
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+        quizGenerator.generate(getAssets());
+        next();
 
-            List<Quiz> quizzes = new ArrayList<>();
-            bufferedReader.readLine();
-            String readLine = bufferedReader.readLine();
-            while (readLine != null) {
-                String[] row = readLine.split(",");
-                Quiz quiz = new Quiz();
-                quiz.question = row[0];
-                quiz.multipleChoice1 = row[1];
-                quiz.multipleChoice2 = row[2];
-                quiz.multipleChoice3 = row[3];
-                quiz.multipleChoice4 = row[4];
-                quiz.correctChoice = Integer.parseInt(row[5]);
-                quiz.explanation = row[6];
-                quizzes.add(quiz);
-                readLine = bufferedReader.readLine();
+        multiplechoice1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                verify(quiz.correctChoice == 1);
             }
-            inputStreamReader.close();
-            bufferedReader.close();
-            quizquestion.setText(quizzes.get(0).question);
-            multiplechoice1.setText(quizzes.get(0).multipleChoice1);
-            multiplechoice2.setText(quizzes.get(0).multipleChoice2);
-            multiplechoice3.setText(quizzes.get(0).multipleChoice3);
-            multiplechoice4.setText(quizzes.get(0).multipleChoice4);
-            quizexplanation.setText(quizzes.get(0).explanation);
-            quizexplanation.setVisibility(View.GONE);
+        });
 
+        multiplechoice2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                verify(quiz.correctChoice == 2);
+            }
+        });
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        multiplechoice3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                verify(quiz.correctChoice == 3);
+            }
+        });
+
+        multiplechoice4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                verify(quiz.correctChoice == 4);
+            }
+        });
+
+        quiznext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                next();
+            }
+        });
+    }
+
+    private void next() {
+        quiz = quizGenerator.next();
+        quizquestion.setText(quiz.question);
+        multiplechoice1.setText(quiz.multipleChoice1);
+        multiplechoice2.setText(quiz.multipleChoice2);
+        multiplechoice3.setText(quiz.multipleChoice3);
+        multiplechoice4.setText(quiz.multipleChoice4);
+        quizexplanation.setText(quiz.explanation);
+
+        quizexplanation.setVisibility(View.GONE);
+        unlockMultipleChoiceClicks();
+    }
+
+    private void verify(Boolean isCorrect) {
+        if (isCorrect) {
+            Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Incorrect", Toast.LENGTH_SHORT).show();
         }
+        lockMultipleChoiceClicks();
+        quizexplanation.setVisibility(View.VISIBLE);
+    }
 
+    private void lockMultipleChoiceClicks() {
+        multiplechoice1.setClickable(false);
+        multiplechoice2.setClickable(false);
+        multiplechoice3.setClickable(false);
+        multiplechoice4.setClickable(false);
+    }
+
+    private void unlockMultipleChoiceClicks() {
+        multiplechoice1.setClickable(true);
+        multiplechoice2.setClickable(true);
+        multiplechoice3.setClickable(true);
+        multiplechoice4.setClickable(true);
     }
 }
