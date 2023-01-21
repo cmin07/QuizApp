@@ -31,6 +31,9 @@
         <activity
             android:name=".PracticeNextActivity">
         </activity>
+        <activity
+            android:name=".LeaderBoard">
+        </activity>
     </application>
 
 </manifest>

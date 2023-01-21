@@ -1,23 +1,13 @@
 package cmin.quizapp;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 public class QuizScreen extends AppCompatActivity {
 
@@ -25,7 +15,9 @@ public class QuizScreen extends AppCompatActivity {
     Quiz quiz;
 
     TextView streakdisplay;
+    TextView streak;
     TextView scoredisplay;
+    TextView score;
     TextView quizquestion;
     Button multiplechoice1;
     Button multiplechoice2;
@@ -33,15 +25,17 @@ public class QuizScreen extends AppCompatActivity {
     Button multiplechoice4;
     TextView quizexplanation;
     Button quiznext;
-    int score = 0;
-    int streak = 0;
+    QuizViewModel viewModel = new QuizViewModel();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quiz_screen);
 
         streakdisplay = findViewById(R.id.streakdisplay);
+        streak = findViewById(R.id.streak);
         scoredisplay = findViewById(R.id.scoredisplay);
+        score = findViewById(R.id.score);
         quizquestion = findViewById(R.id.quizquestion);
         multiplechoice1 = findViewById(R.id.multiplechoice1);
         multiplechoice2 = findViewById(R.id.multiplechoice2);
@@ -49,6 +43,9 @@ public class QuizScreen extends AppCompatActivity {
         multiplechoice4 = findViewById(R.id.multiplechoice4);
         quizexplanation = findViewById(R.id.quizexplanation);
         quiznext = findViewById(R.id.quizscreennext);
+
+        score.setText("" + viewModel.getScore(this));
+
         quizGenerator.generate(getAssets());
         next();
 
@@ -121,12 +118,14 @@ public class QuizScreen extends AppCompatActivity {
     private void verify(Boolean isCorrect) {
         if (isCorrect) {
             Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
-            streak+=1;
-            score+=10+((streak/5)*5);
-            scoredisplay.setText("Score: "+score);
+            int updatedStreak = Integer.parseInt(streak.getText().toString()) + 1;
+            streak.setText("" + updatedStreak);
+            int updatedScore = Integer.parseInt(score.getText().toString()) + 10 + ((updatedStreak / 5) * 5);
+            viewModel.saveScore(this, updatedScore);
+            score.setText("" + updatedScore);
         } else {
             Toast.makeText(this, "Incorrect", Toast.LENGTH_SHORT).show();
-            streak=0;
+            streak.setText("0");
         }
         if(quiz.correctChoice==1){
             multiplechoice1.setBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
@@ -137,7 +136,6 @@ public class QuizScreen extends AppCompatActivity {
         }else if(quiz.correctChoice==4){
             multiplechoice4.setBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
         }
-        streakdisplay.setText("Streak: "+streak);
         lockMultipleChoiceClicks();
         quizexplanation.setVisibility(View.VISIBLE);
     }
