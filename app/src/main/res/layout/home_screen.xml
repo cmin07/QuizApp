@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="132dp"
-        android:text="Quiz App"
+        android:text="EcoQuiz"
         android:textSize="52sp"
         app:layout_constraintBottom_toTopOf="@+id/playbutton"
         app:layout_constraintEnd_toEndOf="parent"
