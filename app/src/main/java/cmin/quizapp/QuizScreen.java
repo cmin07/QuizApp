@@ -120,13 +120,14 @@ public class QuizScreen extends AppCompatActivity {
         if (isCorrect) {
             Toast.makeText(this, "Correct", Toast.LENGTH_SHORT).show();
             int updatedStreak = Integer.parseInt(streak.getText().toString()) + 1;
+            int updatedStreakScore = (updatedStreak / 5) * 5;
             streak.setText("" + updatedStreak);
-            int updatedScore = Integer.parseInt(score.getText().toString()) + 10 + ((updatedStreak / 5) * 5);
+            int updatedScore = Integer.parseInt(score.getText().toString()) + 10 + updatedStreakScore;
             viewModel.saveScore(this, updatedScore);
             score.setText("" + updatedScore);
             quizexplanation.setText(
                 "Correct +10\n" +
-                "Streak Bonus +" + updatedStreak + "\n\n" +
+                "Streak Bonus +" + updatedStreakScore + "\n\n" +
                 quiz.explanation
             );
         } else {

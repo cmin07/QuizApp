@@ -32,7 +32,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Home.this);
-                builder.setMessage("something")
+                builder.setMessage("The environment is in a degrading state, worse than it has ever been before in human history. EcoQuiz aims to make a change by educating our future generations more about the environment and how we can help protect it. EcoQuiz is a user-friendly trivia quiz that uses a large database of questions related to protecting the environment. Keep playing and race against others to become the #1 environment protection expert!")
                         .setPositiveButton("CLOSE", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
