@@ -20,15 +20,39 @@ class QuizViewModel : ViewModel() {
             if (response is Response.Success<List<LeaderBoardRank>>) {
                 if (username != null) {
                     for (i in response.data.indices) {
-                        val leaderBoardRank = response.data.get(i)
+                        val leaderBoardRank = response.data[i]
                         if (leaderBoardRank.username == username) {
                             response.data.removeAt(i)
                             break
                         }
                     }
-                    response.data.add(LeaderBoardRank(username, score))
+
+                    response.data.add(LeaderBoardRank(username, score, 0))
+
                     Collections.sort(response.data,
                         Comparator { rank1: LeaderBoardRank, rank2: LeaderBoardRank -> rank2.score - rank1.score })
+
+                    for (i in response.data.indices) {
+                        val leaderBoardRank = response.data[i]
+                        if (i == 0) {
+                            leaderBoardRank.rank = 1
+                            continue
+                        } else {
+                            val previousLeaderBoardRank = response.data[i - 1]
+
+                            if (leaderBoardRank.score == previousLeaderBoardRank.score) {
+                                leaderBoardRank.rank = previousLeaderBoardRank.rank
+                            } else {
+                                leaderBoardRank.rank = i + 1
+                            }
+                        }
+                    }
+
+
+                    if (response.data.size > 100) {
+                        response.data.removeLast()
+                    }
+
                     repository.updatePerson(response.data)
                 }
                 ranks.postValue(response.data)

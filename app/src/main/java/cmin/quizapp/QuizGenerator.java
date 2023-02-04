@@ -1,6 +1,7 @@
 package cmin.quizapp;
 
 import android.content.res.AssetManager;
+import android.util.Log;
 import android.view.View;
 
 import java.io.BufferedReader;
@@ -24,13 +25,14 @@ public class QuizGenerator {
             bufferedReader.readLine();
             String readLine = bufferedReader.readLine();
             while (readLine != null) {
-                String[] row = readLine.split(",");
+                String[] row = readLine.split("\\|");
                 Quiz quiz = new Quiz();
                 quiz.question = row[0];
                 quiz.multipleChoice1 = row[1];
                 quiz.multipleChoice2 = row[2];
                 quiz.multipleChoice3 = row[3];
                 quiz.multipleChoice4 = row[4];
+                Log.e("minmin", "row[5]: " + row[0]);
                 quiz.correctChoice = Integer.parseInt(row[5]);
                 quiz.explanation = row[6];
                 quizzes.add(quiz);

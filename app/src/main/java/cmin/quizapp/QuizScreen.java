@@ -32,6 +32,8 @@ public class QuizScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quiz_screen);
 
+        if (getSupportActionBar() != null) this.getSupportActionBar().hide();
+
         streakdisplay = findViewById(R.id.streakdisplay);
         streak = findViewById(R.id.streak);
         scoredisplay = findViewById(R.id.scoredisplay);
@@ -104,7 +106,6 @@ public class QuizScreen extends AppCompatActivity {
         multiplechoice2.setText(quiz.multipleChoice2);
         multiplechoice3.setText(quiz.multipleChoice3);
         multiplechoice4.setText(quiz.multipleChoice4);
-        quizexplanation.setText(quiz.explanation);
 
         multiplechoice1.setBackgroundColor(Color.parseColor("#6200ED"));
         multiplechoice2.setBackgroundColor(Color.parseColor("#6200ED"));
@@ -123,9 +124,15 @@ public class QuizScreen extends AppCompatActivity {
             int updatedScore = Integer.parseInt(score.getText().toString()) + 10 + ((updatedStreak / 5) * 5);
             viewModel.saveScore(this, updatedScore);
             score.setText("" + updatedScore);
+            quizexplanation.setText(
+                "Correct +10\n" +
+                "Streak Bonus +" + updatedStreak + "\n\n" +
+                quiz.explanation
+            );
         } else {
             Toast.makeText(this, "Incorrect", Toast.LENGTH_SHORT).show();
             streak.setText("0");
+            quizexplanation.setText(quiz.explanation);
         }
         if(quiz.correctChoice==1){
             multiplechoice1.setBackgroundColor(getResources().getColor(android.R.color.holo_green_light));

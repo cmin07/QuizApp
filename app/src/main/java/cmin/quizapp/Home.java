@@ -22,6 +22,8 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_screen);
 
+        if (getSupportActionBar() != null) this.getSupportActionBar().hide();
+
         ImageView playButton = findViewById(R.id.playbutton);
         ImageView appDescription = findViewById(R.id.appdescription);
         ImageView leaderboard = findViewById(R.id.leaderboard);

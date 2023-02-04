@@ -1,5 +1,6 @@
 package cmin.quizapp;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,9 +55,17 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.rank.setText("" + (position + 1));
+        viewHolder.rank.setText("" + data.get(position).rank);
         viewHolder.username.setText(data.get(position).username);
         viewHolder.score.setText("" + data.get(position).score);
+
+        if (position == 0) {
+            viewHolder.rank.setBackgroundResource(R.drawable.rounded_corner_gold);
+        } else if (position == 1) {
+            viewHolder.rank.setBackgroundResource(R.drawable.rounded_corner_silver);
+        } else if (position == 2) {
+            viewHolder.rank.setBackgroundResource(R.drawable.rounded_corner_bronze);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
