@@ -63,7 +63,7 @@
 
     <Button
         android:id="@+id/multiplechoice1"
-        android:layout_width="175dp"
+        android:layout_width="0dp"
         android:layout_height="175dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
@@ -77,19 +77,21 @@
 
     <Button
         android:id="@+id/multiplechoice2"
-        android:layout_width="175dp"
+        android:layout_width="0dp"
         android:layout_height="175dp"
         android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="24dp"
         android:backgroundTint="#6200ED"
         android:textColor="@color/white"
         android:text="Button"
+        app:layout_constraintStart_toEndOf="@id/multiplechoice1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/quizquestion" />
 
     <Button
         android:id="@+id/multiplechoice3"
-        android:layout_width="175dp"
+        android:layout_width="0dp"
         android:layout_height="175dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="8dp"
@@ -102,7 +104,7 @@
 
     <Button
         android:id="@+id/multiplechoice4"
-        android:layout_width="175dp"
+        android:layout_width="0dp"
         android:layout_height="175dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="24dp"
@@ -110,22 +112,23 @@
         android:textColor="@color/white"
         android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/multiplechoice1"
+        app:layout_constraintStart_toEndOf="@+id/multiplechoice3"
         app:layout_constraintTop_toBottomOf="@+id/multiplechoice2" />
 
     <TextView
         android:id="@+id/quizexplanation"
-        android:layout_width="360dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@android:color/holo_green_light"
         android:textColor="@color/white"
         android:padding="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:gravity="center"
         android:text="TextView"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/multiplechoice4" />
 
