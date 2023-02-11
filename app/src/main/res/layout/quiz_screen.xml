@@ -49,15 +49,16 @@
 
     <TextView
         android:id="@+id/quizquestion"
-        android:layout_width="360dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="#88FFFFFF"
         android:text="TextView"
         android:textSize="16sp"
         android:gravity="center"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scoredisplay" />
 
