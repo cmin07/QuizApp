@@ -3,11 +3,13 @@ package cmin.quizapp;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -16,6 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Home extends AppCompatActivity {
 
     QuizViewModel viewModel = new QuizViewModel();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TextView homescore = findViewById(R.id.homescore);
+        homescore.setText("Score: " + viewModel.getScore(this));
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,6 +36,16 @@ public class Home extends AppCompatActivity {
         ImageView playButton = findViewById(R.id.playbutton);
         ImageView appDescription = findViewById(R.id.appdescription);
         ImageView leaderboard = findViewById(R.id.leaderboard);
+        ImageView camera = findViewById(R.id.camera);
+
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, 1);
+            }
+        });
 
         appDescription.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +81,35 @@ public class Home extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            ImageView imageview = new ImageView(this);
+            imageview.setImageBitmap(image);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(Home.this);
+            builder.setMessage("Are you sure you would like to upload this image?\n")
+                    .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Context context = getApplicationContext();
+
+                            int duration = Toast.LENGTH_SHORT;
+
+                            Toast toast = Toast.makeText(context,"Image was successfully uploaded.", duration);
+                            toast.show();
+                        }
+                    }).
+                    setView(imageview);
+
+            // Create the AlertDialog object and return it
+            builder.create().show();
+            imageview.getLayoutParams().height = 1000;
+            imageview.requestLayout();
+        }
+        super.onActivityResult(requestCode,resultCode,data);
     }
 
     private void launchQuizScreen(String username) {

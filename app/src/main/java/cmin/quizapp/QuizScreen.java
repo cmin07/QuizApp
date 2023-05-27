@@ -45,7 +45,6 @@ public class QuizScreen extends AppCompatActivity {
         multiplechoice4 = findViewById(R.id.multiplechoice4);
         quizexplanation = findViewById(R.id.quizexplanation);
         quiznext = findViewById(R.id.quizscreennext);
-
         score.setText("" + viewModel.getScore(this));
 
         quizGenerator.generate(getAssets());
