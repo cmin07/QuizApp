@@ -18,6 +18,7 @@ public class QuizScreen extends AppCompatActivity {
     TextView streak;
     TextView scoredisplay;
     TextView score;
+    TextView currentsessionscore;
     TextView quizquestion;
     Button multiplechoice1;
     Button multiplechoice2;
@@ -26,7 +27,7 @@ public class QuizScreen extends AppCompatActivity {
     TextView quizexplanation;
     Button quiznext;
     QuizViewModel viewModel = new QuizViewModel();
-
+    int currentSessionScore=0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +39,7 @@ public class QuizScreen extends AppCompatActivity {
         streak = findViewById(R.id.streak);
         scoredisplay = findViewById(R.id.scoredisplay);
         score = findViewById(R.id.score);
+        currentsessionscore=findViewById(R.id.curseshscore);
         quizquestion = findViewById(R.id.quizquestion);
         multiplechoice1 = findViewById(R.id.multiplechoice1);
         multiplechoice2 = findViewById(R.id.multiplechoice2);
@@ -46,7 +48,6 @@ public class QuizScreen extends AppCompatActivity {
         quizexplanation = findViewById(R.id.quizexplanation);
         quiznext = findViewById(R.id.quizscreennext);
         score.setText("" + viewModel.getScore(this));
-
         quizGenerator.generate(getAssets());
         next();
 
@@ -121,6 +122,10 @@ public class QuizScreen extends AppCompatActivity {
             int updatedStreak = Integer.parseInt(streak.getText().toString()) + 1;
             int updatedStreakScore = (updatedStreak / 5) * 5;
             streak.setText("" + updatedStreak);
+
+            currentSessionScore+=10+updatedStreakScore;
+            currentsessionscore.setText("Current Session Score: "+currentSessionScore);
+
             int updatedScore = Integer.parseInt(score.getText().toString()) + 10 + updatedStreakScore;
             viewModel.saveScore(this, updatedScore);
             score.setText("" + updatedScore);

@@ -18,11 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Home extends AppCompatActivity {
 
     QuizViewModel viewModel = new QuizViewModel();
-
+    TextView homescore;
     @Override
     protected void onResume() {
         super.onResume();
-        TextView homescore = findViewById(R.id.homescore);
         homescore.setText("Score: " + viewModel.getScore(this));
     }
 
@@ -32,11 +31,16 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.home_screen);
 
         if (getSupportActionBar() != null) this.getSupportActionBar().hide();
-
+        homescore = findViewById(R.id.homescore);
         ImageView playButton = findViewById(R.id.playbutton);
         ImageView appDescription = findViewById(R.id.appdescription);
         ImageView leaderboard = findViewById(R.id.leaderboard);
         ImageView camera = findViewById(R.id.camera);
+        String username = viewModel.getUserName(Home.this);
+        if(username==null){
+            showUsernameCreatePopup();
+        }
+
 
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,11 +70,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String username = viewModel.getUserName(Home.this);
-                if (username != null) {
-                    launchQuizScreen(username);
-                } else {
-                    showUsernameCreatePopup();
-                }
+                launchQuizScreen(username);
             }
         });
 
@@ -85,7 +85,7 @@ public class Home extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
+        if (requestCode == 1 &&data!=null&& data.getExtras()!=null) {
             Bitmap image = (Bitmap) data.getExtras().get("data");
             ImageView imageview = new ImageView(this);
             imageview.setImageBitmap(image);
@@ -100,6 +100,9 @@ public class Home extends AppCompatActivity {
 
                             Toast toast = Toast.makeText(context,"Image was successfully uploaded.", duration);
                             toast.show();
+                            int updatedScore = viewModel.getScore(Home.this) + 15;
+                            viewModel.saveScore(Home.this, updatedScore);
+                            homescore.setText("Score: " + updatedScore);
                         }
                     }).
                     setView(imageview);
@@ -139,7 +142,6 @@ public class Home extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         String username = usernameEditText.getText().toString();
                         viewModel.saveUserName(Home.this, username);
-                        launchQuizScreen(username);
                     }
                 });
         builder.create().show();

@@ -51,16 +51,16 @@
         android:id="@+id/quizquestion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
         android:background="#88FFFFFF"
+        android:gravity="center"
         android:text="TextView"
         android:textSize="16sp"
-        android:gravity="center"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scoredisplay" />
+        app:layout_constraintTop_toBottomOf="@+id/curseshscore" />
 
     <Button
         android:id="@+id/multiplechoice1"
@@ -143,5 +143,15 @@
         android:text="Next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/curseshscore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="26dp"
+        android:text="Current Session Score: 0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scoredisplay" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
