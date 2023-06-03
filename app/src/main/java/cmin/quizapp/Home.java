@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Home extends AppCompatActivity {
 
     QuizViewModel viewModel = new QuizViewModel();
+    TextView homeusername;
     TextView homescore;
     @Override
     protected void onResume() {
@@ -36,9 +37,14 @@ public class Home extends AppCompatActivity {
         ImageView appDescription = findViewById(R.id.appdescription);
         ImageView leaderboard = findViewById(R.id.leaderboard);
         ImageView camera = findViewById(R.id.camera);
+        homeusername = findViewById(R.id.homeusername);
         String username = viewModel.getUserName(Home.this);
         if(username==null){
+            homeusername.setVisibility(View.GONE);
+            homescore.setVisibility(View.GONE);
             showUsernameCreatePopup();
+        }else{
+            homeusername.setText(username);
         }
 
 
@@ -142,6 +148,9 @@ public class Home extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         String username = usernameEditText.getText().toString();
                         viewModel.saveUserName(Home.this, username);
+                        homeusername.setText(username);
+                        homeusername.setVisibility(View.VISIBLE);
+                        homescore.setVisibility(View.VISIBLE);
                     }
                 });
         builder.create().show();
