@@ -55,16 +55,19 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.rank.setText("" + data.get(position).rank);
-        viewHolder.username.setText(data.get(position).username);
-        viewHolder.score.setText("" + data.get(position).score);
+        int adapterPosition = viewHolder.getAdapterPosition();
+        viewHolder.rank.setText("" + data.get(adapterPosition).rank);
+        viewHolder.username.setText(data.get(adapterPosition).username);
+        viewHolder.score.setText("" + data.get(adapterPosition).score);
 
-        if (position == 0) {
+        if (adapterPosition == 0) {
             viewHolder.rank.setBackgroundResource(R.drawable.rounded_corner_gold);
-        } else if (position == 1) {
+        } else if (adapterPosition == 1) {
             viewHolder.rank.setBackgroundResource(R.drawable.rounded_corner_silver);
-        } else if (position == 2) {
+        } else if (adapterPosition == 2) {
             viewHolder.rank.setBackgroundResource(R.drawable.rounded_corner_bronze);
+        } else {
+            viewHolder.rank.setBackgroundResource(R.drawable.rounded_corner_black);
         }
     }
 
